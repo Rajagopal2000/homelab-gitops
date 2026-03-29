@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: platform
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: https://github.com/OWNER/homelab-setup.git
+        revision: HEAD
+        directories:
+          - path: platform/*
+  template:
+    metadata:
+      name: "platform-{{.path.basename}}"
+      namespace: argocd
+      labels:
+        app.kubernetes.io/part-of: homelab
+        app.kubernetes.io/component: platform
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/OWNER/homelab-setup.git
+        targetRevision: HEAD
+        path: "{{.path.path}}"
+        helm:
+          valueFiles:
+            - values.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{.path.basename}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
