@@ -1,0 +1,8 @@
+apiVersion: v2
+name: longhorn
+description: Longhorn distributed block storage
+version: 0.1.0
+dependencies:
+  - name: longhorn
+    version: "1.11.1"
+    repository: "https://charts.longhorn.io"
