@@ -1,0 +1,59 @@
+argo-cd:
+  global:
+    domain: argocd.localhost
+
+  configs:
+    params:
+      # Single node — no HA needed
+      server.insecure: true
+
+  # Controller
+  controller:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        memory: 512Mi
+
+  # Server
+  server:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        memory: 256Mi
+
+  # Repo server
+  repoServer:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        memory: 256Mi
+
+  # ApplicationSet controller
+  applicationSet:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        memory: 128Mi
+
+  # Redis
+  redis:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        memory: 128Mi
+
+  # Disable components not needed for single-node homelab
+  dex:
+    enabled: false
+  notifications:
+    enabled: false
