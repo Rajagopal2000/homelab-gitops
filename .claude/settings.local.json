@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(devops-engineer)",
+      "WebFetch(domain:argoproj.github.io)",
+      "WebFetch(domain:charts.jetstack.io)",
+      "WebFetch(domain:bitnami-labs.github.io)",
+      "WebFetch(domain:charts.longhorn.io)",
+      "WebFetch(domain:traefik.github.io)",
+      "WebFetch(domain:artifacthub.io)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:cloudflare.github.io)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}
