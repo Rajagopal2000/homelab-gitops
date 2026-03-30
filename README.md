@@ -79,18 +79,18 @@ kubectl create secret generic cloudflare-api-token \
   --namespace cert-manager \
   --from-literal=api-token=YOUR_CLOUDFLARE_API_TOKEN \
   --dry-run=client -o yaml | \
-  kubeseal --controller-name=sealed-secrets --controller-namespace=sealed-secrets -o yaml \
+  kubeseal --controller-name=infra-sealed-secrets --controller-namespace=sealed-secrets -o yaml \
   > infra/cert-manager/templates/cloudflare-api-token-sealed.yaml
 ```
 
 **Cloudflare Tunnel Token:**
 
 ```bash
-kubectl create secret generic tunnel-credentials \
+kubectl create secret generic cloudflare-tunnel-credentials \
   --namespace cloudflare-tunnel \
-  --from-literal=TUNNEL_TOKEN=YOUR_TUNNEL_TOKEN \
+  --from-literal=tunnelToken=YOUR_TUNNEL_TOKEN \
   --dry-run=client -o yaml | \
-  kubeseal --controller-name=sealed-secrets --controller-namespace=sealed-secrets -o yaml \
+  kubeseal --controller-name=infra-sealed-secrets --controller-namespace=sealed-secrets -o yaml \
   > platform/cloudflare-tunnel/templates/tunnel-credentials.yaml
 ```
 
@@ -137,7 +137,7 @@ kubectl get application <app-name> -n argocd -o jsonpath='{.status.sync.status}'
 ## Repository Structure
 
 ```
-homelab-setup/
+homelab-gitops/
 ├── bootstrap/          # One-time manual apply
 │   ├── root.yaml       # Root Application → manages appsets/
 │   └── argocd/         # ArgoCD self-managed Helm wrapper
