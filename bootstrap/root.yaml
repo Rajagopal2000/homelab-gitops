@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/OWNER/homelab-setup.git
+    repoURL: https://github.com/Rajagopal2000/homelab-gitops
     targetRevision: HEAD
     path: appsets
   destination:

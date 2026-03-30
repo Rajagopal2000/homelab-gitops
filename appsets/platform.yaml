@@ -9,7 +9,7 @@ spec:
   goTemplate: true
   generators:
     - git:
-        repoURL: https://github.com/OWNER/homelab-setup.git
+        repoURL: https://github.com/Rajagopal2000/homelab-gitops
         revision: HEAD
         directories:
           - path: platform/*
@@ -23,7 +23,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/OWNER/homelab-setup.git
+        repoURL: https://github.com/Rajagopal2000/homelab-gitops
         targetRevision: HEAD
         path: "{{.path.path}}"
         helm:

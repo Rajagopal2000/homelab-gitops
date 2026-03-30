@@ -219,7 +219,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/OWNER/homelab-setup.git
+    repoURL: https://github.com/Rajagopal2000/homelab-gitops
     targetRevision: HEAD
     path: appsets
   destination:
@@ -231,7 +231,7 @@ spec:
       selfHeal: true
 ```
 
-**Note:** Replace `https://github.com/OWNER/homelab-setup.git` with your actual repo URL before bootstrap. This placeholder appears in this file and all ApplicationSet files.
+**Note:** Replace `https://github.com/Rajagopal2000/homelab-gitops` with your actual repo URL before bootstrap. This placeholder appears in this file and all ApplicationSet files.
 
 - [ ] **Step 2: Commit**
 
@@ -265,7 +265,7 @@ spec:
   goTemplate: true
   generators:
     - git:
-        repoURL: https://github.com/OWNER/homelab-setup.git
+        repoURL: https://github.com/Rajagopal2000/homelab-gitops
         revision: HEAD
         directories:
           - path: infra/*
@@ -279,7 +279,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/OWNER/homelab-setup.git
+        repoURL: https://github.com/Rajagopal2000/homelab-gitops
         targetRevision: HEAD
         path: "{{.path.path}}"
         helm:
@@ -312,7 +312,7 @@ spec:
   goTemplate: true
   generators:
     - git:
-        repoURL: https://github.com/OWNER/homelab-setup.git
+        repoURL: https://github.com/Rajagopal2000/homelab-gitops
         revision: HEAD
         directories:
           - path: platform/*
@@ -326,7 +326,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/OWNER/homelab-setup.git
+        repoURL: https://github.com/Rajagopal2000/homelab-gitops
         targetRevision: HEAD
         path: "{{.path.path}}"
         helm:
@@ -359,7 +359,7 @@ spec:
   goTemplate: true
   generators:
     - git:
-        repoURL: https://github.com/OWNER/homelab-setup.git
+        repoURL: https://github.com/Rajagopal2000/homelab-gitops
         revision: HEAD
         directories:
           - path: applications/*
@@ -373,7 +373,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/OWNER/homelab-setup.git
+        repoURL: https://github.com/Rajagopal2000/homelab-gitops
         targetRevision: HEAD
         path: "{{.path.path}}"
         helm:
@@ -731,7 +731,7 @@ ApplicationSets auto-discover app directories — adding an app is just creating
 
 ### 1. Update repo URL
 
-Replace all occurrences of `https://github.com/OWNER/homelab-setup.git` with your actual repo URL in:
+Replace all occurrences of `https://github.com/Rajagopal2000/homelab-gitops` with your actual repo URL in:
 - `bootstrap/root.yaml`
 - `appsets/infra.yaml`
 - `appsets/platform.yaml`
