@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflare-tunnel
+  labels:
+    app.kubernetes.io/name: cloudflare-tunnel
+    app.kubernetes.io/part-of: homelab
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cloudflare-tunnel
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: cloudflare-tunnel
+    spec:
+      containers:
+        - name: cloudflared
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          args:
+            - tunnel
+            - --no-autoupdate
+            - run
+            - --token
+            - $(TUNNEL_TOKEN)
+          env:
+            - name: TUNNEL_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-tunnel-credentials
+                  key: tunnelToken
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
