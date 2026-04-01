@@ -102,6 +102,62 @@ git commit -m "feat: add sealed secrets for cloudflare"
 git push
 ```
 
+## External Access via Cloudflare Tunnel
+
+Traffic from the public internet reaches cluster services through a Cloudflare Tunnel:
+
+```
+Browser → Cloudflare Edge (HTTPS) → Cloudflare Tunnel (QUIC)
+  → cloudflared pod → Traefik (HTTP) → backend service
+```
+
+### How it works
+
+1. **DNS** — A CNAME record for the subdomain (e.g. `argocd`) points to `<tunnel-id>.cfargotunnel.com` (proxied/orange cloud)
+2. **Cloudflare Tunnel** — The tunnel config (managed via Zero Trust dashboard) routes `*.rajagopaliyer.com` to `http://platform-traefik.traefik.svc.cluster.local:80`
+3. **Traefik** — An `IngressRoute` matches the `Host` header and forwards to the backend service
+4. **TLS** — Cloudflare handles TLS termination for the browser. Internal traffic is plain HTTP
+
+### Adding a new public hostname
+
+1. **Create an IngressRoute** in `platform/traefik/templates/` to route the hostname to the backend service
+2. **Add a DNS CNAME** in Cloudflare Dashboard → DNS → Records:
+   - Type: `CNAME`
+   - Name: `<subdomain>`
+   - Target: `<tunnel-id>.cfargotunnel.com`
+   - Proxy: Proxied (orange cloud)
+
+### Routing to external (non-cluster) services
+
+To route a hostname to a service outside the cluster (e.g. Proxmox at `192.168.4.185:8006`), you need a Kubernetes `Service` + `Endpoints` pair pointing to the external IP. These must be applied manually because ArgoCD excludes `Endpoints` and `EndpointSlice` resources by default.
+
+```bash
+kubectl apply -n traefik -f - <<'EOF'
+apiVersion: v1
+kind: Service
+metadata:
+  name: <service-name>
+spec:
+  ports:
+    - port: <port>
+      targetPort: <port>
+      protocol: TCP
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: <service-name>
+subsets:
+  - addresses:
+      - ip: <external-ip>
+    ports:
+      - port: <port>
+        protocol: TCP
+EOF
+```
+
+Then add an `IngressRoute` (and `ServersTransport` if the backend uses HTTPS with a self-signed cert) in `platform/traefik/templates/`. See `proxmox-external.yaml` for an example.
+
 ## Adding a New App
 
 1. Create a directory under the correct layer (`infra/`, `platform/`, or `applications/`)
