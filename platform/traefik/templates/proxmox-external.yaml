@@ -20,4 +20,4 @@ spec:
         - name: proxmox-external
           port: 8006
           scheme: https
-          serversTransport: traefik-proxmox-transport@kubernetescrd
+          serversTransport: proxmox-transport
