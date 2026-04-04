@@ -29,6 +29,8 @@ spec:
       labels:
         app.kubernetes.io/name: qbittorrent
     spec:
+      nodeSelector:
+        {{- toYaml .Values.media.nodeSelector | nindent 8 }}
       containers:
         - name: qbittorrent
           image: "{{ .Values.qbittorrent.image.repository }}:{{ .Values.qbittorrent.image.tag }}"

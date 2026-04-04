@@ -3,6 +3,9 @@ domain: rajagopaliyer.com
 media:
   storageSize: 1Ti
   storageClass: longhorn
+  # All pods using the shared RWO PVC must run on the same node
+  nodeSelector:
+    kubernetes.io/hostname: talos-d3i-sbn
 
 env: &linuxserver-env
   - name: PUID

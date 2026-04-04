@@ -29,6 +29,8 @@ spec:
       labels:
         app.kubernetes.io/name: jellyfin
     spec:
+      nodeSelector:
+        {{- toYaml .Values.media.nodeSelector | nindent 8 }}
       containers:
         - name: jellyfin
           image: "{{ .Values.jellyfin.image.repository }}:{{ .Values.jellyfin.image.tag }}"
