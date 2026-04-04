@@ -1,4 +1,5 @@
 longhorn:
+  enablePSP: false
   preUpgradeChecker:
     jobEnabled: false
   defaultSettings:
