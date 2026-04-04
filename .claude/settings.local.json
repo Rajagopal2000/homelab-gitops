@@ -32,7 +32,9 @@
       "Bash(talosctl -n 192.168.4.103 dmesg --tail 30)",
       "Bash(talosctl -n 192.168.4.103 service)",
       "Bash(helm show:*)",
-      "Bash(helm template:*)"
+      "Bash(helm template:*)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/argoproj/argo-cd/v2.14.0/assets/swagger.json\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); helm=d.get\\('definitions',{}\\).get\\('v1alpha1ApplicationSourceHelm',{}\\).get\\('properties',{}\\); print\\([k for k in helm.keys\\(\\)]\\)\")"
     ]
   }
 }
