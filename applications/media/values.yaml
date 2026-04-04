@@ -1,11 +1,11 @@
 domain: rajagopaliyer.com
 
 media:
-  storageSize: 1Ti
+  storageSize: 300Gi
   storageClass: longhorn
   # All pods using the shared RWO PVC must run on the same node
   nodeSelector:
-    kubernetes.io/hostname: talos-d3i-sbn
+    kubernetes.io/hostname: talos-l14-w85
 
 env: &linuxserver-env
   - name: PUID
@@ -21,10 +21,10 @@ jellyfin:
     tag: latest
   resources:
     requests:
-      cpu: 500m
-      memory: 1Gi
+      cpu: 200m
+      memory: 256Mi
     limits:
-      memory: 4Gi
+      memory: 2Gi
   configStorageSize: 2Gi
 
 sonarr:
@@ -33,8 +33,8 @@ sonarr:
     tag: latest
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 50m
+      memory: 128Mi
     limits:
       memory: 512Mi
   configStorageSize: 2Gi
@@ -45,8 +45,8 @@ radarr:
     tag: latest
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 50m
+      memory: 128Mi
     limits:
       memory: 512Mi
   configStorageSize: 2Gi
@@ -69,10 +69,10 @@ qbittorrent:
     tag: latest
   resources:
     requests:
-      cpu: 200m
-      memory: 256Mi
+      cpu: 50m
+      memory: 128Mi
     limits:
-      memory: 1Gi
+      memory: 512Mi
   configStorageSize: 1Gi
 
 bazarr:
