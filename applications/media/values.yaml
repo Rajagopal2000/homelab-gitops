@@ -1,0 +1,96 @@
+domain: rajagopaliyer.com
+
+media:
+  storageSize: 1Ti
+  storageClass: longhorn
+
+env: &linuxserver-env
+  - name: PUID
+    value: "1000"
+  - name: PGID
+    value: "1000"
+  - name: TZ
+    value: "Asia/Singapore"
+
+jellyfin:
+  image:
+    repository: lscr.io/linuxserver/jellyfin
+    tag: latest
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      memory: 4Gi
+  configStorageSize: 2Gi
+
+sonarr:
+  image:
+    repository: lscr.io/linuxserver/sonarr
+    tag: latest
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+  configStorageSize: 2Gi
+
+radarr:
+  image:
+    repository: lscr.io/linuxserver/radarr
+    tag: latest
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+  configStorageSize: 2Gi
+
+prowlarr:
+  image:
+    repository: lscr.io/linuxserver/prowlarr
+    tag: latest
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+  configStorageSize: 1Gi
+
+qbittorrent:
+  image:
+    repository: lscr.io/linuxserver/qbittorrent
+    tag: latest
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      memory: 1Gi
+  configStorageSize: 1Gi
+
+bazarr:
+  image:
+    repository: lscr.io/linuxserver/bazarr
+    tag: latest
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+  configStorageSize: 1Gi
+
+flaresolverr:
+  image:
+    repository: ghcr.io/flaresolverr/flaresolverr
+    tag: v3.3.21
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 512Mi

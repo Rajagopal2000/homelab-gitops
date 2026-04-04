@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: media-data
+  labels:
+    app.kubernetes.io/part-of: media
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: {{ .Values.media.storageClass }}
+  resources:
+    requests:
+      storage: {{ .Values.media.storageSize }}
