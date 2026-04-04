@@ -29,6 +29,8 @@ spec:
       labels:
         app.kubernetes.io/name: bazarr
     spec:
+      nodeSelector:
+        {{- toYaml .Values.media.nodeSelector | nindent 8 }}
       containers:
         - name: bazarr
           image: "{{ .Values.bazarr.image.repository }}:{{ .Values.bazarr.image.tag }}"
