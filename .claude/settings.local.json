@@ -44,7 +44,8 @@
       "Bash(kubectl replace:*)",
       "Bash(kubectl delete:*)",
       "Bash(python3 -m json.tool)",
-      "Bash(kubectl label node:*)"
+      "Bash(kubectl label node:*)",
+      "Bash(kubectl patch pvc:*)"
     ]
   }
 }
