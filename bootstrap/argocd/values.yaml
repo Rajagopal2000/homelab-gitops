@@ -6,41 +6,6 @@ argo-cd:
     params:
       # Single node — no HA needed
       server.insecure: true
-    cm:
-      # Exclude Longhorn Helm hook Jobs that ArgoCD incorrectly applies during sync
-      resource.exclusions: |
-        - apiGroups:
-          - ''
-          - discovery.k8s.io
-          kinds:
-          - Endpoints
-          - EndpointSlice
-        - apiGroups:
-          - coordination.k8s.io
-          kinds:
-          - Lease
-        - apiGroups:
-          - authentication.k8s.io
-          - authorization.k8s.io
-          kinds:
-          - SelfSubjectReview
-          - TokenReview
-          - LocalSubjectAccessReview
-          - SelfSubjectAccessReview
-          - SelfSubjectRulesReview
-          - SubjectAccessReview
-        - apiGroups:
-          - certificates.k8s.io
-          kinds:
-          - CertificateSigningRequest
-        - apiGroups:
-          - cert-manager.io
-          kinds:
-          - CertificateRequest
-        - apiGroups:
-          - batch
-          kinds:
-          - Job
 
   # Controller
   controller:

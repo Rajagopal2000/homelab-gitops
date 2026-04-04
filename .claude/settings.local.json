@@ -34,7 +34,15 @@
       "Bash(helm show:*)",
       "Bash(helm template:*)",
       "Bash(curl -s \"https://raw.githubusercontent.com/argoproj/argo-cd/v2.14.0/assets/swagger.json\")",
-      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); helm=d.get\\('definitions',{}\\).get\\('v1alpha1ApplicationSourceHelm',{}\\).get\\('properties',{}\\); print\\([k for k in helm.keys\\(\\)]\\)\")"
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); helm=d.get\\('definitions',{}\\).get\\('v1alpha1ApplicationSourceHelm',{}\\).get\\('properties',{}\\); print\\([k for k in helm.keys\\(\\)]\\)\")",
+      "Bash(kubectl delete job:*)",
+      "Bash(kubectl delete app:*)",
+      "Bash(kubectl delete ns:*)",
+      "Bash(kubectl api-resources:*)",
+      "Bash(xargs -I{} kubectl get {} -n longhorn --no-headers)",
+      "Bash(python3 -c \"import sys,json; ns=json.load\\(sys.stdin\\); ns['spec']['finalizers']=[]; json.dump\\(ns, sys.stdout\\)\")",
+      "Bash(kubectl replace:*)",
+      "Bash(kubectl delete:*)"
     ]
   }
 }
