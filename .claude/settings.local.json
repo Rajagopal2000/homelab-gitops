@@ -15,7 +15,9 @@
       "Bash(git commit:*)",
       "WebSearch",
       "Bash(kubectl get:*)",
-      "Bash(kubectl logs:*)"
+      "Bash(kubectl logs:*)",
+      "Bash(kubectl patch app:*)",
+      "Bash(kubectl describe:*)"
     ]
   }
 }
