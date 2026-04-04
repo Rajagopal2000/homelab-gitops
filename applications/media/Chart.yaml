@@ -1,0 +1,4 @@
+apiVersion: v2
+name: media
+description: Media streaming stack (Jellyfin, Sonarr, Radarr, Prowlarr, qBittorrent, Bazarr, Flaresolverr)
+version: 0.1.0
