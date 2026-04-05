@@ -20,7 +20,8 @@ spec:
           image: "{{ .Values.keycloak.image.repository }}:{{ .Values.keycloak.image.tag }}"
           args:
             - start
-            - --hostname=keycloak.{{ .Values.domain }}
+            - --hostname=https://keycloak.{{ .Values.domain }}
+            - --hostname-backchannel-dynamic=true
             - --proxy-headers=xforwarded
             - --http-enabled=true
             - --health-enabled=true
