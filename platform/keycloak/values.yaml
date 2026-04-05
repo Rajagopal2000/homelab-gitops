@@ -1,0 +1,25 @@
+domain: rajagopaliyer.com
+
+keycloak:
+  image:
+    repository: quay.io/keycloak/keycloak
+    tag: "26.2.4"
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+    limits:
+      memory: 1Gi
+  configStorageSize: 1Gi
+
+postgres:
+  image:
+    repository: postgres
+    tag: "16-alpine"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+  storageSize: 2Gi

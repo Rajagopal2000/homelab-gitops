@@ -1,0 +1,4 @@
+apiVersion: v2
+name: keycloak
+description: Keycloak identity provider for Cloudflare Zero Trust
+version: 0.1.0
