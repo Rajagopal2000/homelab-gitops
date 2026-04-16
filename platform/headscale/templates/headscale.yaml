@@ -50,8 +50,8 @@ spec:
               mountPath: /etc/headscale/config.yaml
               subPath: config.yaml
             - name: config
-              mountPath: /etc/headscale/acl.yaml
-              subPath: acl.yaml
+              mountPath: /etc/headscale/acl.json
+              subPath: acl.json
             - name: data
               mountPath: /var/lib/headscale
             - name: oidc-secret

@@ -48,11 +48,14 @@ data:
       strip_email_domain: false
     policy:
       mode: file
-      path: /etc/headscale/acl.yaml
-  acl.yaml: |
-    acls:
-      - action: accept
-        src:
-          - "*"
-        dst:
-          - "*:*"
+      path: /etc/headscale/acl.json
+  acl.json: |
+    {
+      "acls": [
+        {
+          "action": "accept",
+          "src": ["*"],
+          "dst": ["*:*"]
+        }
+      ]
+    }
