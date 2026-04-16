@@ -5,7 +5,7 @@ metadata:
   namespace: headscale
 spec:
   encryptedData:
-    authkey: AgDKqMzwhP/NmOyTHxc3Vj2BqjdtHNLI9WvrDuDHOohYojP5BWoyXICQeNXnRC+/nsWIVjinJrTUfl5GbbgiQjx9ibpiouiRlPh6BpxG1f8g/e74/prnuXt6dMG496nOz+qDyub1ynm4cAFzfOR2S9HZGh1DEytruuAmp+r0enaJD2GoeD7E8pPKDKsrT5OWmmXMgRSPmeb9l0pm+p9BEHyYWBAIe24Nsz+4pcCmG2PokrGIz85iRh+pJSN7VDxcLFksIQzfWgaqsRQIEoxkNYpyZamCNuBVE4owb1ZJSzdiY2fh7gwD2zIkO7lRUxYyzfML0lzJb4VGrP3iUH8+J/aTXUKBesSyBUtzlycE7iA2oG7ggIEPcJzKmffWBxqjDQ/12SMQA/TPQFew5IIPWW3b0bA9JILPiGj422DXRjQoImuX6A7yCkMUdpwjYTmyL+IDcCmJ2GwDjA5fHZjBV8J5xaeWSu8xiQ+uXOROSAMyr9VnIlqeqaQO3/Sk65IiCeHf/8FEF3MRChwKeFsZA90FHN2Qt7oSqHU20FK+w2ZolPj8fs7msy13+Uj8qiZi21hoAW5+lpc99J7Ib4d4+N/nR5jopo0nuP3yuEDzKtwRpUbSmAWGNw0BsJuVbiPCh7E89TUJu6cGAgeZJU5OtcZb34rB9+9jDg5A0x8C74K5NJ6ikRyeK7Iyl6LtdlSwYJUAjYTEsDLJvvOjB69nTSyYN/hhvGZoxpOYxNNxkxpsiQss7CWl1YeHvyp1Ib1187I=
+    authkey: AgCF6iFi3BftLsqw/Ntw3dbxkPmZR1dKnvCcz9cfVueTEc/DgbPlZ5jWmtkg340RfOP9zjPGp8CYBMfP9r00AM2AhLPOEog4fvIMXTi2mdMIXOelO/Sdi9lDNCHnWI1t8SbwoPgEgGYXFny7tAnz4+8WTj8csWd1gO8MnxBLC7rnmbmzYpCovwa0iXKZXnLnaUP0X0t/udf30HHN/pt18wN/0cEbGaqzau/Z/QVbiI/dzTpz4xsXgYlF9KkbsVEjC3Hh1lASFrLfYl3Ss7FC8vqQ4Vuzh3KqaXg0G4C0ugYYWecenOqc1/sh8rqb7LcpLvSttt+Etk9d6f0sF5i7eW4AicLIAIE7Cbue5hfP8IxUy1VDeIj/tSB0qtj/bPWV+jWnxbPaPJLKZm258KKgH9H9IvHngdAEkbxVCopErflLdYLd5Hkfmf7vPUe5lL5F4IxMDe7Am1/Z4XhNJXUoR0Qj2V8OHmT3b6fOsk0gDJCL2sWspuCwqzaRjV+1GF8VELTHTaIivMem+L0K2LAHtH/XbnpyCQ+vA4BGJNkkSbGgMxW74G9cHcPDJ7Y6iGqn/+M+9L/e4hv/I3QMR98npEo+sXKXtagxS7OCW+4ogST6SI0ajV/+zBgAp6Ffs86Fl+zn29oj4UkJ/T+h8J9mxdBEqzXye1Nph7qPguWNZ74pP1QD9nW8LyhWRtZ4otUpywJhS6NkmcgvIAW8iv/EFq1H65qlnXeAJ3Sb1pNgS/lvCPOz/byHdJtNH4iS6/BvoEA=
   template:
     metadata:
       name: tailscale-subnet-router-auth
@@ -40,7 +40,7 @@ spec:
                   name: tailscale-subnet-router-auth
                   key: authkey
             - name: TS_LOGIN_SERVER
-              value: http://headscale.headscale.svc:8080
+              value: https://headscale.{{ .Values.domain }}
             - name: TS_ROUTES
               value: "192.168.4.0/24"
             - name: TS_USERSPACE
