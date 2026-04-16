@@ -1,0 +1,24 @@
+domain: rajagopaliyer.com
+
+headscale:
+  image:
+    repository: headscale/headscale
+    tag: "0.25.1"
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+  configStorageSize: 1Gi
+
+ui:
+  image:
+    repository: ghcr.io/gurucomputing/headscale-ui
+    tag: "2024.02.24-beta1"
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      memory: 64Mi
