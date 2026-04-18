@@ -1,4 +1,0 @@
-apiVersion: v2
-name: headscale
-description: Headscale - self-hosted Tailscale control server
-version: 0.1.0
