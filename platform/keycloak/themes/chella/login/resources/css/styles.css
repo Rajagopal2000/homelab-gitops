@@ -1,0 +1,318 @@
+/* Chella Caterers — Keycloak login theme.
+   Hand-written; no Tailwind compiler runs inside Keycloak. Token values
+   mirror the storefront (neutral palette, serif logo, pill-shaped inputs). */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #fafafa;
+  color: #171717;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: #171717;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.chella-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.chella-header {
+  border-bottom: 1px solid #e5e5e5;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+}
+.chella-header__inner {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.chella-brand {
+  font-family: ui-serif, Georgia, "Times New Roman", serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #171717;
+}
+
+.chella-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+}
+
+.chella-card {
+  width: 100%;
+  max-width: 26rem;
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.chella-card__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.25rem;
+  color: #171717;
+}
+.chella-card__subtitle {
+  font-size: 0.875rem;
+  color: #525252;
+  margin: 0 0 1.5rem;
+}
+
+/* Form */
+
+#kc-form,
+form.form-actions,
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.control-label,
+label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #404040;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+.form-control {
+  width: 100%;
+  border: 1px solid #d4d4d4;
+  border-radius: 9999px;
+  background: #ffffff;
+  padding: 0.625rem 1rem;
+  font-size: 0.9375rem;
+  color: #171717;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+.form-control:focus {
+  outline: none;
+  border-color: #171717;
+  box-shadow: 0 0 0 3px rgba(23, 23, 23, 0.08);
+}
+
+.checkbox,
+.checkbox label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #525252;
+  cursor: pointer;
+}
+.checkbox input {
+  margin: 0;
+}
+
+/* Buttons */
+
+.chella-btn,
+input[type="submit"],
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease,
+    color 120ms ease;
+  text-decoration: none;
+}
+.chella-btn--primary,
+input[type="submit"],
+button.btn-primary {
+  background: #171717;
+  color: #fafafa;
+  border-color: #171717;
+}
+.chella-btn--primary:hover,
+input[type="submit"]:hover,
+button.btn-primary:hover {
+  background: #404040;
+  border-color: #404040;
+  text-decoration: none;
+}
+.chella-btn--secondary,
+.chella-btn--social {
+  background: #ffffff;
+  color: #171717;
+  border-color: #d4d4d4;
+}
+.chella-btn--secondary:hover,
+.chella-btn--social:hover {
+  background: #f5f5f5;
+  text-decoration: none;
+}
+
+/* Social provider buttons (Google, etc.) */
+
+.chella-social {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.chella-divider {
+  position: relative;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #737373;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 1.5rem 0 1rem;
+}
+.chella-divider::before,
+.chella-divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: calc(50% - 1.5rem);
+  height: 1px;
+  background: #e5e5e5;
+}
+.chella-divider::before {
+  left: 0;
+}
+.chella-divider::after {
+  right: 0;
+}
+
+.chella-social__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* Footer / info area */
+
+.chella-card__footer {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f5f5f5;
+  font-size: 0.875rem;
+  color: #525252;
+  text-align: center;
+}
+.chella-card__footer a {
+  font-weight: 500;
+  color: #171717;
+}
+
+.chella-foot {
+  border-top: 1px solid #e5e5e5;
+  padding: 1.25rem 1.5rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #737373;
+  background: #ffffff;
+}
+
+/* Messages (alerts) */
+
+.alert,
+#kc-error-message,
+.kc-feedback-text {
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+.alert-error,
+.alert-warning {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+.alert-success {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+.alert-info {
+  background: #f5f5f5;
+  color: #404040;
+  border: 1px solid #e5e5e5;
+}
+
+/* Field-level error */
+
+.kc-feedback-text,
+.input-error,
+.feedback-error {
+  color: #b91c1c;
+  font-size: 0.8125rem;
+  margin: 0.25rem 0 0;
+}
+
+/* Forgot-password / register links row */
+
+#kc-form-options,
+.kc-form-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.875rem;
+}
+
+#kc-form-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  .chella-card {
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+  }
+}
