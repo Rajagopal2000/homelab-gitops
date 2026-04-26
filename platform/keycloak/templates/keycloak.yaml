@@ -58,6 +58,34 @@ spec:
             periodSeconds: 10
           resources:
             {{- toYaml .Values.keycloak.resources | nindent 12 }}
+          volumeMounts:
+            {{- /* Reconstruct themes/chella/login/<path> from the
+                   ConfigMap's flattened keys. Keys use `__` as the path
+                   separator (see themes-configmap.yaml); this list must
+                   stay in sync with the files under
+                   themes/chella/login/. */}}
+            - name: theme-chella
+              mountPath: /opt/keycloak/themes/chella/login/theme.properties
+              subPath: theme.properties
+            - name: theme-chella
+              mountPath: /opt/keycloak/themes/chella/login/template.ftl
+              subPath: template.ftl
+            - name: theme-chella
+              mountPath: /opt/keycloak/themes/chella/login/login.ftl
+              subPath: login.ftl
+            - name: theme-chella
+              mountPath: /opt/keycloak/themes/chella/login/messages/messages_en.properties
+              subPath: messages__messages_en.properties
+            - name: theme-chella
+              mountPath: /opt/keycloak/themes/chella/login/resources/css/styles.css
+              subPath: resources__css__styles.css
+            - name: theme-chella
+              mountPath: /opt/keycloak/themes/chella/login/resources/img/logo.svg
+              subPath: resources__img__logo.svg
+      volumes:
+        - name: theme-chella
+          configMap:
+            name: keycloak-theme-chella
 ---
 apiVersion: v1
 kind: Service
