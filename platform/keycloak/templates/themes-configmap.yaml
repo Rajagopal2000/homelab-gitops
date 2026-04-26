@@ -1,0 +1,21 @@
+{{/*
+  Inline every file under themes/chella/ as a ConfigMap key. Helm flattens
+  the path with `_` so we restore the directory tree via subPath mounts in
+  the deployment. Keep this file authoritative for the theme — if a file
+  doesn't show up in this ConfigMap, it isn't visible to Keycloak.
+
+  ConfigMap keys can't contain '/'. We use '__' as the path separator and
+  reconstruct the layout in the volumeMounts below.
+*/}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: keycloak-theme-chella
+  labels:
+    app.kubernetes.io/name: keycloak
+    app.kubernetes.io/component: theme
+data:
+{{- range $path, $_ := .Files.Glob "themes/chella/login/**" }}
+  {{ trimPrefix "themes/chella/login/" $path | replace "/" "__" | quote }}: |-
+{{ $.Files.Get $path | indent 4 }}
+{{- end }}
