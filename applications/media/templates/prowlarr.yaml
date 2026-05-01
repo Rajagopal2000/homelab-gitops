@@ -37,6 +37,10 @@ spec:
               name: http
           env:
             {{- toYaml .Values.env | nindent 12 }}
+            - name: HTTP_PROXY
+              value: http://gluetun:8888
+            - name: HTTPS_PROXY
+              value: http://gluetun:8888
           volumeMounts:
             - name: config
               mountPath: /config
