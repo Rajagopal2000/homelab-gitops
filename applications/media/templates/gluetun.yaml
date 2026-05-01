@@ -5,7 +5,7 @@ metadata:
   namespace: media
 spec:
   encryptedData:
-    token: AgCI6ZBlw52FvLuCgCkSTWRPmTcGAd+kCz/W5RikeZfYpcWyQp0dNGKzkN/OnvSclOMKbUJwNPv+Lp1tsNyNvWX5thCddw0Z0QXkGNVyooYnXMTrhG/zI4PRK358yzpjmQbC1QQRaGEGMFbPShS2PEKWYPNixLAWtgFnGaGGlB1fWy4bl/2RoI/XbhAnmucl8HiIwHzNjmyzLx4bn9YsbUP2HnGJUUXvrnU8PmwMpD0IOfiU2h0R1XfPjEQsH0folTGyZu3JQ42ZhePQ0tIsJRrFa40wSPjFXmXhfvvcmkbDeXjoCcSIeFHAvzjsYDgmPuMAp4Ufq3i5GUKQnEKYTx4ePmNHDWoSkiKI6um5Cm0nz8v1P97AFSBeF5b+GJ8s4qOwue+BDK0Kqt8OPcyjlFW+j6dxREsnomkbzl3EriyAqq1rm7lZ7HpyBJDMfDc+VxCbVN3wxn6HnQJ5FKsjB6BB20t2UfRw99l4AIi3a6QkNZ/EWo2lNNUrsc6yLnyKPMBtcW5BXcO/gKxrNASqOiOXzpT9ei8IlFVUwl6Tjbujlp4EbeW+KyZPtgePnH5tQSxa+AN/4/5lQHb1bJtQQ3NhR8DVwWDwkEBEArlpDvI/J/Ty5o2AICEH0Xzg1G7p8ssAoknsLrCYxStCzXoRytmbYdDCTJAYf8JOAPAvGjS+Jz69a9LiRw7sglOdvyScEF8rDHct0d0vOjzGWPfhwrHflUMdsZ698ceyx8g7Ly6iIrEsdumgcDBhyX5LJIcwHA+ExnJnnDLYDabMofp8IeQ8
+    wireguard_private_key: AgAoKSx4NTSkJNNSNWYP6ianSFeeTMCXwI0TlhGlBphCAcItIXpHBMQQkAfcekkuCYdqzhKWLO6FExxpjU+4btzzgAq03zx8qFm2EUscbZ1776fyrhLCA19Ptj8XVhiZUQA1NVRhf1C2BbkYGlwqmYiI5Q7PkM88gn2o2RGZ/IV5CWgpJ3N9MIe0mGNXc4Siz2lIkO+hsoN+hJLKZ62qT/prCetB5ajq878ED/JV0c4wYIZo0L5CvkrjxFfPF8PY6BbUBwvODkkBQ/yh+EMbn/tr52Yx6lnFlSa7ZWp+t4M2RCOhHhv26lNbKrUBor3QtQcM2I0EoKDUfAR2JG2KhgbJ29KSBVHL56a2GXgFogyvKsMgx7PNJ3HySxjzniPgcwpm3MeO3rPCc8Sb2hvV5xmCFT1bwB5sGIddlbuQzEQ3QRlZqMG62bZBGQ14ZCEe0lraPdT2Nt4Ks9LCGrh8z+CVWYzCujZn5cgtoLhzG5fFUeCSOf6tbJSVNCrHPU3SH2TSooe/npf+w4ipXbrkZ7iLdGoO2NEWwr/hP42+lSlJnoJwI4GCMaggoyyMPIAwDScVuoYF7BnJljlwctoIsO+h9W/TqT6PZ8r02c20xyLHgxDwL6X7vtGholKv4WFUBXJ0f4fcUFZ6UmejrHwJ/F7XGimsBwU85QyvYHEuG+5qwVVocqPmn/iU0MxdXUIWcFXmKk9l7zlNRz3hCpkdw/lHa5abELnERBQqclXIyPRZbD+kTAu39CqFfxU7qA==
   template:
     metadata:
       name: gluetun-vpn-credentials
@@ -42,14 +42,12 @@ spec:
             - name: VPN_SERVICE_PROVIDER
               value: nordvpn
             - name: VPN_TYPE
-              value: openvpn
-            - name: OPENVPN_USER
+              value: wireguard
+            - name: WIREGUARD_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
                   name: gluetun-vpn-credentials
-                  key: token
-            - name: OPENVPN_PASSWORD
-              value: "nordvpn"
+                  key: wireguard_private_key
             - name: SERVER_COUNTRIES
               value: Singapore
             - name: HTTPPROXY
@@ -70,9 +68,6 @@ spec:
               memory: 256Mi
         - name: qbittorrent
           image: "{{ .Values.qbittorrent.image.repository }}:{{ .Values.qbittorrent.image.tag }}"
-          ports:
-            - containerPort: 8080
-              name: http
           env:
             {{- toYaml .Values.env | nindent 12 }}
           volumeMounts:
