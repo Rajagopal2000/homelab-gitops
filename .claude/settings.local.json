@@ -67,7 +67,9 @@
       "Bash(python3 -c \"import sys,json; [print\\(f'  Proxy: {p[\\\\\"name\\\\\"]}'\\) for p in json.load\\(sys.stdin\\)]\")",
       "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'Status: {d.get\\(\\\\\"status\\\\\"\\)}, Solution status: {d.get\\(\\\\\"solution\\\\\",{}\\).get\\(\\\\\"status\\\\\",\\\\\"?\\\\\"\\)}'\\)\")",
       "Bash(kubectl create:*)",
-      "Bash(kubeseal --controller-name=infra-sealed-secrets --controller-namespace=sealed-secrets -o yaml)"
+      "Bash(kubeseal --controller-name=infra-sealed-secrets --controller-namespace=sealed-secrets -o yaml)",
+      "Bash(curl -s -u \"token:e9f2ab27cb11380e5fa26f5ce100c6bd97573791eac05bb643849bab7e65ef8d\" \"https://api.nordvpn.com/v1/users/services/credentials\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'WG Private Key: {d.get\\(\\\\\"nordlynx_private_key\\\\\",\\\\\"not found\\\\\"\\)}'\\)\")"
     ]
   }
 }
