@@ -47,7 +47,25 @@
       "Bash(kubectl label node:*)",
       "Bash(kubectl patch pvc:*)",
       "Bash(helm repo:*)",
-      "Bash(helm search:*)"
+      "Bash(helm search:*)",
+      "Bash(kubectl exec:*)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'Save path: {d[\\\\\"save_path\\\\\"]}'\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'Download client: {d.get\\(\\\\\"name\\\\\", d\\)}'\\)\")",
+      "Bash(python3 -c \"import sys,json; [print\\(f'Root folder: {r[\\\\\"path\\\\\"]}'\\) for r in json.load\\(sys.stdin\\)]\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'Sonarr root folder: {d.get\\(\\\\\"path\\\\\",d\\)}'\\)\")",
+      "Bash(python3 -c \"import sys,json; clients=json.load\\(sys.stdin\\); [print\\(f'{c[\\\\\"name\\\\\"]} \\(id={c[\\\\\"id\\\\\"]}\\)'\\) for c in clients]\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'Download client: {d.get\\(\\\\\"name\\\\\",d\\)}'\\)\")",
+      "Bash(python3 -c ':*)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'Added: {d.get\\(\\\\\"name\\\\\", \\\\\"error\\\\\"\\)}, id={d.get\\(\\\\\"id\\\\\",\\\\\"?\\\\\"\\)}'\\) if isinstance\\(d,dict\\) else print\\(d\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'Added: {d[\\\\\"name\\\\\"]}, id={d[\\\\\"id\\\\\"]}'\\) if isinstance\\(d,dict\\) and 'name' in d else print\\(d\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'Added: {d.get\\(\\\\\"name\\\\\",d\\)}'\\) if isinstance\\(d,dict\\) else print\\(d\\)\")",
+      "Bash(kubectl rollout:*)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'Version: {d[\\\\\"Version\\\\\"]}, StartupWizardCompleted: {d.get\\(\\\\\"StartupWizardCompleted\\\\\",\\\\\"?\\\\\"\\)}'\\)\")",
+      "Bash(kubectl run:*)",
+      "Bash(kubectl scale:*)",
+      "Bash(python3 -c \"import sys,json; [print\\(f'  Download client: {c[\\\\\"name\\\\\"]}'\\) for c in json.load\\(sys.stdin\\)]\")",
+      "Bash(python3 -c \"import sys,json; [print\\(f'  Proxy: {p[\\\\\"name\\\\\"]}'\\) for p in json.load\\(sys.stdin\\)]\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'Status: {d.get\\(\\\\\"status\\\\\"\\)}, Solution status: {d.get\\(\\\\\"solution\\\\\",{}\\).get\\(\\\\\"status\\\\\",\\\\\"?\\\\\"\\)}'\\)\")"
     ]
   }
 }

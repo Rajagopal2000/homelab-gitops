@@ -25,7 +25,7 @@ jellyfin:
       memory: 256Mi
     limits:
       memory: 2Gi
-  configStorageSize: 2Gi
+  configStorageSize: 5Gi
 
 sonarr:
   image:
@@ -94,6 +94,6 @@ flaresolverr:
   resources:
     requests:
       cpu: 100m
-      memory: 128Mi
+      memory: 256Mi
     limits:
-      memory: 512Mi
+      memory: 1Gi
