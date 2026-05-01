@@ -69,7 +69,8 @@
       "Bash(kubectl create:*)",
       "Bash(kubeseal --controller-name=infra-sealed-secrets --controller-namespace=sealed-secrets -o yaml)",
       "Bash(curl -s -u \"token:e9f2ab27cb11380e5fa26f5ce100c6bd97573791eac05bb643849bab7e65ef8d\" \"https://api.nordvpn.com/v1/users/services/credentials\")",
-      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'WG Private Key: {d.get\\(\\\\\"nordlynx_private_key\\\\\",\\\\\"not found\\\\\"\\)}'\\)\")"
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'WG Private Key: {d.get\\(\\\\\"nordlynx_private_key\\\\\",\\\\\"not found\\\\\"\\)}'\\)\")",
+      "Bash(python3 -c \"import sys,json; [print\\(f'  {c[\\\\\"name\\\\\"]} → {c[\\\\\"implementation\\\\\"]} \\(host={[f[\\\\\"value\\\\\"] for f in c[\\\\\"fields\\\\\"] if f[\\\\\"name\\\\\"]==\\\\\"host\\\\\"][0]}\\)'\\) for c in json.load\\(sys.stdin\\)]\")"
     ]
   }
 }
