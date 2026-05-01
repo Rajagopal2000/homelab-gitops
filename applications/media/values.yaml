@@ -21,10 +21,10 @@ jellyfin:
     tag: latest
   resources:
     requests:
-      cpu: 200m
-      memory: 256Mi
+      cpu: 500m
+      memory: 1Gi
     limits:
-      memory: 2Gi
+      memory: 4Gi
   configStorageSize: 5Gi
 
 sonarr:
@@ -33,10 +33,10 @@ sonarr:
     tag: latest
   resources:
     requests:
-      cpu: 50m
-      memory: 128Mi
-    limits:
+      cpu: 100m
       memory: 512Mi
+    limits:
+      memory: 1Gi
   configStorageSize: 2Gi
 
 radarr:
@@ -45,10 +45,10 @@ radarr:
     tag: latest
   resources:
     requests:
-      cpu: 50m
-      memory: 128Mi
-    limits:
+      cpu: 100m
       memory: 512Mi
+    limits:
+      memory: 1Gi
   configStorageSize: 2Gi
 
 prowlarr:
@@ -58,9 +58,9 @@ prowlarr:
   resources:
     requests:
       cpu: 100m
-      memory: 128Mi
-    limits:
       memory: 256Mi
+    limits:
+      memory: 512Mi
   configStorageSize: 1Gi
 
 qbittorrent:
@@ -69,10 +69,10 @@ qbittorrent:
     tag: latest
   resources:
     requests:
-      cpu: 50m
-      memory: 128Mi
+      cpu: 100m
+      memory: 256Mi
     limits:
-      memory: 512Mi
+      memory: 1Gi
   configStorageSize: 1Gi
 
 bazarr:
@@ -82,9 +82,21 @@ bazarr:
   resources:
     requests:
       cpu: 100m
-      memory: 128Mi
-    limits:
       memory: 256Mi
+    limits:
+      memory: 512Mi
+  configStorageSize: 1Gi
+
+jellyseerr:
+  image:
+    repository: fallenbagel/jellyseerr
+    tag: latest
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 1Gi
   configStorageSize: 1Gi
 
 flaresolverr:
