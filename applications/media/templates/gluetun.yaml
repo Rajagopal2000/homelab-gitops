@@ -1,0 +1,103 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: gluetun-vpn-credentials
+  namespace: media
+spec:
+  encryptedData:
+    token: AgCI6ZBlw52FvLuCgCkSTWRPmTcGAd+kCz/W5RikeZfYpcWyQp0dNGKzkN/OnvSclOMKbUJwNPv+Lp1tsNyNvWX5thCddw0Z0QXkGNVyooYnXMTrhG/zI4PRK358yzpjmQbC1QQRaGEGMFbPShS2PEKWYPNixLAWtgFnGaGGlB1fWy4bl/2RoI/XbhAnmucl8HiIwHzNjmyzLx4bn9YsbUP2HnGJUUXvrnU8PmwMpD0IOfiU2h0R1XfPjEQsH0folTGyZu3JQ42ZhePQ0tIsJRrFa40wSPjFXmXhfvvcmkbDeXjoCcSIeFHAvzjsYDgmPuMAp4Ufq3i5GUKQnEKYTx4ePmNHDWoSkiKI6um5Cm0nz8v1P97AFSBeF5b+GJ8s4qOwue+BDK0Kqt8OPcyjlFW+j6dxREsnomkbzl3EriyAqq1rm7lZ7HpyBJDMfDc+VxCbVN3wxn6HnQJ5FKsjB6BB20t2UfRw99l4AIi3a6QkNZ/EWo2lNNUrsc6yLnyKPMBtcW5BXcO/gKxrNASqOiOXzpT9ei8IlFVUwl6Tjbujlp4EbeW+KyZPtgePnH5tQSxa+AN/4/5lQHb1bJtQQ3NhR8DVwWDwkEBEArlpDvI/J/Ty5o2AICEH0Xzg1G7p8ssAoknsLrCYxStCzXoRytmbYdDCTJAYf8JOAPAvGjS+Jz69a9LiRw7sglOdvyScEF8rDHct0d0vOjzGWPfhwrHflUMdsZ698ceyx8g7Ly6iIrEsdumgcDBhyX5LJIcwHA+ExnJnnDLYDabMofp8IeQ8
+  template:
+    metadata:
+      name: gluetun-vpn-credentials
+      namespace: media
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gluetun
+  labels:
+    app.kubernetes.io/name: gluetun
+    app.kubernetes.io/part-of: media
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gluetun
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: gluetun
+    spec:
+      nodeSelector:
+        {{- toYaml .Values.media.nodeSelector | nindent 8 }}
+      containers:
+        - name: gluetun
+          image: qmcgaw/gluetun:latest
+          ports:
+            - containerPort: 8888
+              name: http-proxy
+            - containerPort: 8080
+              name: qbit-http
+          env:
+            - name: VPN_SERVICE_PROVIDER
+              value: nordvpn
+            - name: VPN_TYPE
+              value: openvpn
+            - name: OPENVPN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: gluetun-vpn-credentials
+                  key: token
+            - name: OPENVPN_PASSWORD
+              value: "nordvpn"
+            - name: SERVER_COUNTRIES
+              value: Singapore
+            - name: HTTPPROXY
+              value: "on"
+            - name: HTTPPROXY_LISTENING_ADDRESS
+              value: ":8888"
+            - name: FIREWALL_INPUT_PORTS
+              value: "8888,8080"
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              memory: 256Mi
+        - name: qbittorrent
+          image: "{{ .Values.qbittorrent.image.repository }}:{{ .Values.qbittorrent.image.tag }}"
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            {{- toYaml .Values.env | nindent 12 }}
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: media
+              mountPath: /media
+          resources:
+            {{- toYaml .Values.qbittorrent.resources | nindent 12 }}
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: qbittorrent-config
+        - name: media
+          persistentVolumeClaim:
+            claimName: media-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gluetun
+spec:
+  selector:
+    app.kubernetes.io/name: gluetun
+  ports:
+    - port: 8888
+      targetPort: http-proxy
+      name: http-proxy

@@ -65,7 +65,9 @@
       "Bash(kubectl scale:*)",
       "Bash(python3 -c \"import sys,json; [print\\(f'  Download client: {c[\\\\\"name\\\\\"]}'\\) for c in json.load\\(sys.stdin\\)]\")",
       "Bash(python3 -c \"import sys,json; [print\\(f'  Proxy: {p[\\\\\"name\\\\\"]}'\\) for p in json.load\\(sys.stdin\\)]\")",
-      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'Status: {d.get\\(\\\\\"status\\\\\"\\)}, Solution status: {d.get\\(\\\\\"solution\\\\\",{}\\).get\\(\\\\\"status\\\\\",\\\\\"?\\\\\"\\)}'\\)\")"
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'Status: {d.get\\(\\\\\"status\\\\\"\\)}, Solution status: {d.get\\(\\\\\"solution\\\\\",{}\\).get\\(\\\\\"status\\\\\",\\\\\"?\\\\\"\\)}'\\)\")",
+      "Bash(kubectl create:*)",
+      "Bash(kubeseal --controller-name=infra-sealed-secrets --controller-namespace=sealed-secrets -o yaml)"
     ]
   }
 }
