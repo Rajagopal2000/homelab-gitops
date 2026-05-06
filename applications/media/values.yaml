@@ -99,6 +99,30 @@ jellyseerr:
       memory: 1Gi
   configStorageSize: 1Gi
 
+readarr:
+  image:
+    repository: lscr.io/linuxserver/readarr
+    tag: develop
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+  configStorageSize: 2Gi
+
+calibreweb:
+  image:
+    repository: lscr.io/linuxserver/calibre-web
+    tag: latest
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 512Mi
+  configStorageSize: 1Gi
+
 flaresolverr:
   image:
     repository: ghcr.io/flaresolverr/flaresolverr
