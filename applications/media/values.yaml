@@ -102,7 +102,7 @@ jellyseerr:
 readarr:
   image:
     repository: lscr.io/linuxserver/readarr
-    tag: 0.4.18-develop
+    tag: 0.4.19-nightly
   resources:
     requests:
       cpu: 100m
