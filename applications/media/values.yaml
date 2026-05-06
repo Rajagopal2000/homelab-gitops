@@ -123,6 +123,18 @@ calibreweb:
       memory: 512Mi
   configStorageSize: 1Gi
 
+filebrowser:
+  image:
+    repository: filebrowser/filebrowser
+    tag: latest
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 256Mi
+  configStorageSize: 100Mi
+
 flaresolverr:
   image:
     repository: ghcr.io/flaresolverr/flaresolverr
