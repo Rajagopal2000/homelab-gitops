@@ -1,0 +1,14 @@
+domain: rajagopaliyer.com
+
+minio:
+  image:
+    repository: minio/minio
+    tag: latest
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+    limits:
+      memory: 1Gi
+  storageSize: 100Gi
+  storageClass: longhorn

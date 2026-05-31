@@ -1,0 +1,123 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: minio-credentials
+  namespace: minio
+spec:
+  encryptedData:
+    root-password: AgA+nIsWIVZNMbfkLC8WPpRokPAgwxsu1frYNj/aeYmsppHy61F7YfSu46oA7PxuRVc5oFqdH3QGH7yvlzwJnZT/ubPuQ6HuREB18npokDRYlS4SUEhCTeHCYnfLqF3+cn27z4IhMJz2BdC1gegZ7dLf1ME5a9h/iAw/DOHmSfzB8yHG14vDeJgUQqauD4V/J/gfNBfA9T1ordVRNGvu9KtWho3K0AkRS8YfHnMxQpmgWvMVw8Wdumv9ylaLIQ1Su0nHss+7XVGAbyaK5rwUGOCjcWABs10pXc5NbZQ1wg76oUdQjKSPJUObk3h3xX8qGA6IgE68H6OtaHdqv/gK+27CAGLO7xlVoH+/6DDnYqTSztdKFRO3/gkDZInJZ1UPNaO3VScfhdsWcyT9Q3nKc3rIyP45G/uJzKxeH5d2BCtDpp8CeLIk4cPuYMOv9EmtDXYHoK6mP1l6VgTDeaBq9ldDlnz5aLrpLZpam8RrY+1VflV8l2rVHVn2snehTj2UXDS6Uq4FRu3tYbI0iaL3oIbmQkiddAiF+nnuOB1R3K5SXLDbI+JcqzNvSfmlkhYRbYSXVnlir3mZGVdNBMpERULDgMXniWp0+TP6fnTdgig7WyACh1hLEigMQXCFZNpm9AuNktm8on6+Nie0Qyt71ZBc4M5KtKesUd87f2Q+IRn6/A9/A7ADCEKjrI+g6W9sxiKzVWxo6u1Bye6/J3AS/3vrfEe7EgJV05o=
+    root-user: AgAAYUMbnZbTC6vHn2C24/3gleiHJPSRxsqbQzkrFQaslqFqBaCVntaSJVkutE8qrDk+Gxkt+zzCAVVMDB4fHY4E0dq8Ap6mtdRcTDx34yn2ykPOgrrK8EyUc4E5Knq76WiQu4jM3IaKIO78oylA308QqPvhRSaaiHuQp2DIJRs7zNPGBHyyg/Dq7S3OOke4wfGqNO8sx2nLkefC1e5ysLre2sWhcvqb4xAP6qa4VDTdqjlf2Olva+T6D9AtHfhknjd04XCOKt3amQ9haE0N3ghq4qJo6D7ZIcjz4siVZrjk1z+/dnPSDIMKvZ/9/zlj3XRSmjZvwNl/ezX4qvGmutbxYZ/Dsut9S8TP3XSov7D76wpLAe8dwf6KT/7hAIph8uMqCncuXuo22SVgNL+95cNLXg4diwHvGjxtWTqIU56G/GP7SHv++tm1GhzJHohSu2BJAS0ZR8Mx3rZhLoYDgSx2Y3Fxo0h6h/Abr1HHp6vNH5Iiqlwkxu/mVqMq5+ZRlzxj4Zx38RlzRu5qgwj23DjDmCAEwLt+stsmpuSpLAmH5iRLzoZjn2VpAsVOQrN4c2b0zTrrPDZE/1eb+pgKlMlgimyhKymkZSAYbemkq8LyQ+JTIpJV9Fc0PlFdVWtDs+FO+vKHLCmB1HIWzR3Io7ryDGVMrJcMXtMXW4n34n0Anc8fwXKDhLpGcmA+s+BQc27c5zSH9w==
+  template:
+    metadata:
+      name: minio-credentials
+      namespace: minio
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minio-data
+  labels:
+    app.kubernetes.io/name: minio
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: {{ .Values.minio.storageClass }}
+  resources:
+    requests:
+      storage: {{ .Values.minio.storageSize }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio
+  labels:
+    app.kubernetes.io/name: minio
+    app.kubernetes.io/part-of: minio
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: minio
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: minio
+    spec:
+      containers:
+        - name: minio
+          image: "{{ .Values.minio.image.repository }}:{{ .Values.minio.image.tag }}"
+          args:
+            - server
+            - /data
+            - --console-address
+            - ":9001"
+          ports:
+            - containerPort: 9000
+              name: api
+            - containerPort: 9001
+              name: console
+          env:
+            - name: MINIO_ROOT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: minio-credentials
+                  key: root-user
+            - name: MINIO_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: minio-credentials
+                  key: root-password
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          resources:
+            {{- toYaml .Values.minio.resources | nindent 12 }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: minio-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio
+spec:
+  selector:
+    app.kubernetes.io/name: minio
+  ports:
+    - port: 9000
+      targetPort: api
+      name: api
+    - port: 9001
+      targetPort: console
+      name: console
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: minio-console
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`minio.{{ .Values.domain }}`)
+      kind: Rule
+      services:
+        - name: minio
+          port: 9001
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: minio-api
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`s3.{{ .Values.domain }}`)
+      kind: Rule
+      services:
+        - name: minio
+          port: 9000

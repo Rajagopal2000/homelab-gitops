@@ -1,0 +1,4 @@
+apiVersion: v2
+name: minio
+description: MinIO S3-compatible object storage
+version: 0.1.0
