@@ -9,16 +9,19 @@ elasticsearch:
   storageClass: longhorn
   resources:
     requests:
-      cpu: 500m
-      memory: 1Gi
+      cpu: "1"
+      # Request == limit gives the pod Guaranteed QoS, so it won't be evicted/
+      # OOM-killed under node pressure. Nodes have ~47Gi each, so we're generous.
+      memory: 8Gi
     limits:
-      # ECK auto-sizes JVM heap to ~50% of the memory limit (~1Gi here).
-      memory: 2Gi
+      # ECK auto-sizes JVM heap to ~50% of the memory limit (~4Gi here).
+      memory: 8Gi
 
 kibana:
   resources:
     requests:
-      cpu: 200m
-      memory: 512Mi
-    limits:
+      cpu: 500m
       memory: 1Gi
+    limits:
+      # Kibana 9.x loads ~190 plugins; 2Gi is a safe ceiling vs the old 1Gi.
+      memory: 2Gi
