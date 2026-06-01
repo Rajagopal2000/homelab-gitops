@@ -1,0 +1,24 @@
+domain: rajagopaliyer.com
+
+# Elastic Stack version (Elasticsearch + Kibana share it). ECK 3.4.0 supports 9.x.
+version: "9.4.2"
+
+elasticsearch:
+  nodeCount: 3
+  storageSize: 50Gi
+  storageClass: longhorn
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      # ECK auto-sizes JVM heap to ~50% of the memory limit (~1Gi here).
+      memory: 2Gi
+
+kibana:
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+    limits:
+      memory: 1Gi

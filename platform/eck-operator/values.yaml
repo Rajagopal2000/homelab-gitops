@@ -1,0 +1,8 @@
+# Values for the upstream eck-operator subchart.
+eck-operator:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 150Mi
+    limits:
+      memory: 512Mi

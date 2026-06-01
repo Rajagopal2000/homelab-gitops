@@ -1,0 +1,4 @@
+apiVersion: v2
+name: elasticsearch
+description: Elasticsearch + Kibana via ECK
+version: 0.1.0

@@ -1,0 +1,71 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch
+  labels:
+    app.kubernetes.io/name: elasticsearch
+    app.kubernetes.io/part-of: elastic
+spec:
+  version: {{ .Values.version | quote }}
+  nodeSets:
+    - name: default
+      count: {{ .Values.elasticsearch.nodeCount }}
+      config:
+        # Talos blocks privileged initContainers / node sysctls, so avoid mmap
+        # rather than requiring vm.max_map_count=262144. Negligible cost at this scale.
+        node.store.allow_mmap: false
+      podTemplate:
+        spec:
+          containers:
+            - name: elasticsearch
+              resources:
+                {{- toYaml .Values.elasticsearch.resources | nindent 16 }}
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            storageClassName: {{ .Values.elasticsearch.storageClass }}
+            resources:
+              requests:
+                storage: {{ .Values.elasticsearch.storageSize }}
+---
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: kibana
+  labels:
+    app.kubernetes.io/name: kibana
+    app.kubernetes.io/part-of: elastic
+spec:
+  version: {{ .Values.version | quote }}
+  count: 1
+  elasticsearchRef:
+    name: elasticsearch
+  http:
+    tls:
+      # Disable Kibana's public-facing self-signed cert so it serves HTTP behind
+      # Traefik, consistent with the other services. ES internals stay encrypted.
+      selfSignedCertificate:
+        disabled: true
+  podTemplate:
+    spec:
+      containers:
+        - name: kibana
+          resources:
+            {{- toYaml .Values.kibana.resources | nindent 14 }}
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kibana
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`kibana.{{ .Values.domain }}`)
+      kind: Rule
+      services:
+        - name: kibana-kb-http
+          port: 5601

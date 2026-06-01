@@ -38,3 +38,5 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
+          # ECK CRDs exceed the client-side-apply annotation size limit.
+          - ServerSideApply=true

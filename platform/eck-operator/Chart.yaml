@@ -1,0 +1,8 @@
+apiVersion: v2
+name: eck-operator
+description: Elastic Cloud on Kubernetes operator
+version: 0.1.0
+dependencies:
+  - name: eck-operator
+    version: "3.4.0"
+    repository: "https://helm.elastic.co"
